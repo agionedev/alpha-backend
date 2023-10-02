@@ -3,11 +3,7 @@
 
 name: Deployment Azure Develop
 
-#on: workflow_dispatch     
-on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "develop" ]
+on: workflow_dispatch     
 
 jobs:
   build:
