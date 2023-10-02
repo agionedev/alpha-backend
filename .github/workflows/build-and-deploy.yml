@@ -17,15 +17,8 @@ jobs:
           token: ${{secrets.GLOBAL_ACCESS_TOKEN}}
       - name: Initialize and Update submodules
         run: |
-          git submodule update --recursive --remote
-      
-      - name: Directory
-        run: ls -la
-
-      - name: project-agione-backend Directory
-        run: |
-          cd project-agione-backend
-          ls -la
+          git submodule update --init --recursive
+        shell: bash
         
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
