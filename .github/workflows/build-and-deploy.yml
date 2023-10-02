@@ -21,6 +21,11 @@ jobs:
       
       - name: Directory
         run: ls -la
+
+      - name: project-agione-backend Directory
+        run: |
+          cd project-agione-backend
+          ls -la
         
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
