@@ -42,7 +42,7 @@ jobs:
           ${{ runner.os }}-nuget-
           
       - name: Restore dependencies
-        run: dotnet restore 
+        run: dotnet restore "project-agione-backend"
           
       - name: Build with dotnet
         run: dotnet build "project-agione-backend/Platform" --configuration Release --no-restore
