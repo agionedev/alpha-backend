@@ -25,7 +25,20 @@ jobs:
          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
          restore-keys: |
           ${{ runner.os }}-nuget-
+          
+      - name: Initialize submodules
+        run: git submodule update --init --remote
       
+      - name: Up to date master branch
+        run: |
+          git config --global user.name 'agionedev'
+          git config --global user.email 'admin-dev01@allianceground.com'
+          git fetch --unshallow
+          git checkout develop
+          git pull
+          git submodule foreach --recursive git checkout develop
+          git submodule foreach --recursive git pull
+        
       - name: Restore dependencies
         run: dotnet restore 
           
