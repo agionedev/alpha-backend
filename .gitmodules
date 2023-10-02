@@ -1,6 +1,8 @@
 [submodule "project-agione-backend"]
 	path = project-agione-backend
 	url = https://github.com/agionedev/project-agione-backend.git
+	branch = develop
 [submodule "project-agione-passengers-flights-sync"]
 	path = project-agione-passengers-flights-sync
 	url = https://github.com/agionedev/project-agione-passengers-flights-sync.git
+	branch = develop
