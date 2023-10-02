@@ -68,5 +68,5 @@ jobs:
         with:
           app-name: 'agionedev'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3BE715B7870E4538B590634A53DF0A56 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_10CC802B4DDF494EB16EF8F857C6E6BF }}
           package: .
