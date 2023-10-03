@@ -4,3 +4,21 @@
 [submodule "project-agione-passengers-flights-sync"]
 	path = project-agione-passengers-flights-sync
 	url = https://github.com/agionedev/project-agione-passengers-flights-sync.git
+[submodule "project-agione-hangfire"]
+	path = project-agione-hangfire
+	url = https://github.com/agionedev/project-agione-hangfire.git
+[submodule "project-agione-laravel-sync"]
+	path = project-agione-laravel-sync
+	url = https://github.com/agionedev/project-agione-laravel-sync.git
+[submodule "project-agione-workday-sync"]
+	path = project-agione-workday-sync
+	url = https://github.com/agionedev/project-agione-workday-sync.git
+[submodule "project-agione-flightaware-metrics"]
+	path = project-agione-flightaware-metrics
+	url = https://github.com/agionedev/project-agione-flightaware-metrics.git
+[submodule "project-agione-firehose-websocket-server"]
+	path = project-agione-firehose-websocket-server
+	url = https://github.com/agionedev/project-agione-firehose-websocket-server.git
+[submodule "project-agione-workday-poster-transactions"]
+	path = project-agione-workday-poster-transactions
+	url = https://github.com/agionedev/project-agione-workday-poster-transactions.git
