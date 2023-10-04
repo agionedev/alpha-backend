@@ -62,7 +62,7 @@ jobs:
           
         - name: See obj directory
           run: |
-              cd project-agione-backend/IreportRender/obj
+              cd project-agione-backend/IReportRender/obj
               ls -la 
             
         - name: Build
