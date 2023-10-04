@@ -1,0 +1,89 @@
+name: Re-Usable Azure Function Deployment Workflow
+
+on:
+  workflow_call:
+    inputs:
+      TARGET_ENV:
+        required: true
+        type: string
+      AZURE_APPNAME:
+        required: true
+        type: string
+      WORKING_DIRECTORY:
+        required: true
+        type: string
+      DOTNET_VERSION:
+        required: true
+        type: string
+      CONFIGURATION:
+        required: true
+        type: string
+      AZURE_SLOTNAME:
+        required: false
+        #production is the default name of every slot when not specified.
+        default: 'production'
+        type: string
+
+
+
+jobs:
+    azfunctionbuild:
+        name: 'Build ${{ inputs.AZURE_APPNAME }} - ${{ inputs.TARGET_ENV }}'
+        runs-on: ubuntu-latest
+        steps:
+        - run: echo "🎉 Build and Deploy target ${{ inputs.AZURE_APPNAME }} | ${{ inputs.AZURE_SLOTNAME }} | ${{ inputs.WORKING_DIRECTORY }}"
+  
+        - name: 'Checkout branch'
+          uses: actions/checkout@v3
+
+        - name: Setup .NET ${{ inputs.DOTNET_VERSION }} environment
+          uses: actions/setup-dotnet@v3
+          with:
+            dotnet-version: ${{ inputs.DOTNET_VERSION }}
+
+        - name: Set up dependency caching
+          uses: actions/cache@v3
+          with:
+              path: ~/.nuget/packages
+              key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+              restore-keys: |
+                ${{ runner.os }}-nuget-
+
+        - name: Restore dependencies
+          run: dotnet restore "${{ inputs.WORKING_DIRECTORY }}"
+
+        - name: Build
+          run: dotnet build "${{ inputs.WORKING_DIRECTORY }}" --configuration ${{ inputs.CONFIGURATION }} --no-restore
+    
+        - name: Publish
+          run: dotnet publish "${{ inputs.WORKING_DIRECTORY }}" --configuration ${{ inputs.CONFIGURATION }} --no-build --output "${{ inputs.WORKING_DIRECTORY }}/publish"
+
+        - name: Upload artifact
+          uses: actions/upload-artifact@v3
+          with:
+            name: ${{ inputs.AZURE_APPNAME }}
+            path: ${{ inputs.WORKING_DIRECTORY }}/publish
+
+    deploy:
+        name: 'Deploy ${{ inputs.AZURE_APPNAME }} - ${{ inputs.TARGET_ENV }}'
+        runs-on: ubuntu-latest
+        needs: azfunctionbuild
+        environment:
+            name: ${{ inputs.TARGET_ENV }}
+        steps:
+          
+        - name: Download artifact
+          uses: actions/download-artifact@v3
+          with:
+            name: ${{ inputs.AZURE_APPNAME }}
+            path: ${{ inputs.WORKING_DIRECTORY }}/publish
+
+        - name: 'Deploy to Azure'
+          uses: azure/webapps-deploy@v2
+          with:
+            app-name: ${{ inputs.AZURE_APPNAME }}
+            #TODO: Revisit later to try to clean up this if-else. Seems like right now it's not possible to passs the repository environment secrets directly from the caller.
+            publish-profile: ${{ inputs.AZURE_APPNAME == 'func-cpq-appts-dev-eus' && secrets.FUNC_CPQ_APPTS_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-docusign-api-dev-eus' && secrets.FUNC_CPQ_DOCUSIGNAPI_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-docusign-listener-dev-eus' && secrets.FUNC_CPQ_DOCUSIGNLISTENER_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-images-compression-dev-eus' && secrets.FUNC_CPQ_IMAGECOMPRESSION_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-metrics-dev-eus' && secrets.FUNC_CPQ_METRICS_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-users-dev-eus' && secrets.FUNC_CPQ_USERS_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-jotform-listener-dev-eus' && secrets.FUNC_CPQ_JOTFORMLISTENER_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'app-cpq-api-dev-eus' && secrets.APP_CPQ_API_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-appts-uat-eus' && secrets.FUNC_CPQ_APPTS_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-docusign-api-uat-eus' && secrets.FUNC_CPQ_DOCUSIGNAPI_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-docusign-listener-uat-eus' && secrets.FUNC_CPQ_DOCUSIGNLISTENER_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-images-compression-uat-eus' && secrets.FUNC_CPQ_IMAGECOMPRESSION_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-metrics-uat-eus' && secrets.FUNC_CPQ_METRICS_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-users-uat-eus' && secrets.FUNC_CPQ_USERS_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'func-cpq-jotform-listener-uat-eus' && secrets.FUNC_CPQ_JOTFORMLISTENER_AZURE_PUBLISHPROFILE || inputs.AZURE_APPNAME == 'app-cpq-api-uat-eus' && secrets.APP_CPQ_API_AZURE_PUBLISHPROFILE || 'error' }}
+            slot-name: ${{ inputs.AZURE_SLOTNAME }}
+            package: ${{ inputs.WORKING_DIRECTORY }}/publish
+
