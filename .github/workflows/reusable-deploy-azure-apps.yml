@@ -34,13 +34,21 @@ jobs:
         - run: echo "🎉 Build and Deploy target ${{ inputs.AZURE_APPNAME }} | ${{ inputs.AZURE_SLOTNAME }} | ${{ inputs.WORKING_DIRECTORY }}"
   
         - name: 'Checkout branch'
-          uses: actions/checkout@v3
-
+          uses: actions/checkout@v2
+          with:
+            submodules: 'recursive'
+            token: ${{secrets.GLOBAL_ACCESS_TOKEN}}
+        - name: Initialize and Update submodules
+          run: |
+            git submodule update --init --recursive
+          shell: bash
+          
         - name: Setup .NET ${{ inputs.DOTNET_VERSION }} environment
-          uses: actions/setup-dotnet@v3
+          uses: actions/setup-dotnet@v1
           with:
             dotnet-version: ${{ inputs.DOTNET_VERSION }}
-
+            include-prerelease: true
+            
         - name: Set up dependency caching
           uses: actions/cache@v3
           with:
