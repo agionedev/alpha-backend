@@ -59,7 +59,12 @@ jobs:
 
         - name: Restore dependencies
           run: dotnet restore "${{ inputs.WORKING_DIRECTORY }}"
-
+          
+        - name: See obj directory
+          run: |
+              cd project-agione-backend/IreportRender/obj
+              ls -la 
+            
         - name: Build
           run: dotnet build "${{ inputs.WORKING_DIRECTORY }}" --configuration ${{ inputs.CONFIGURATION }} --no-restore
     
