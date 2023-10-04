@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "logging": {
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    }
+  },
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=false",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+  },
+  "StationsToSync": [
+    32 //SNA
+  ],
+  "ConnectionStrings": {
+    // "DefaultConnection": "Server=DESKTOP-F1KKBBV\\SQLEXPRESS;Initial Catalog=AGINEW;trusted_connection = true"
+    "DefaultConnection": "Server=tcp:agi1dev1.database.windows.net,1433;Initial Catalog=agistaging;Persist Security Info=False;User ID=adminsa;Password=hashAhhahsd1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+    "AzureRedisCache": "cache-agione-stag-use2-01.redis.cache.windows.net:6380,password=DbiL2kHGoMf1Ufj4DtRqwwsHlDwBKt658AzCaFrEHn8=,ssl=True,abortConnect=False"
+    //"DefaultConnection": "Server=tcp:agi1dev1.database.windows.net,1433;Initial Catalog=agidev;Persist Security Info=False;User ID=adminsa;Password=hashAhhahsd1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;"
+
+  }
+}
