@@ -1,0 +1,18 @@
+
+name: Build and Deploy Azure Apps Develop
+
+on: workflow_dispatch
+
+jobs:
+  app-hangfire-dev:
+    
+    uses: ./.github/workflows/reusable_deploy_azurewebapp.yml
+    
+    with:
+        TARGET_ENV: 'Development'
+        AZURE_APPNAME: 'app-hangfire-dev'
+        WORKING_DIRECTORY: 'project-agione-hangfire'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+
