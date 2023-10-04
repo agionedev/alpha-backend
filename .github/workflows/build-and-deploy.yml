@@ -10,8 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+          token: ${{secrets.GLOBAL_ACCESS_TOKEN}}
+      - name: Initialize and Update submodules
+        run: |
+          git submodule update --init --recursive
+        shell: bash
+        
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
@@ -25,15 +33,15 @@ jobs:
          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
          restore-keys: |
           ${{ runner.os }}-nuget-
-      
+          
       - name: Restore dependencies
-        run: dotnet restore 
+        run: dotnet restore "project-agione-backend"
           
       - name: Build with dotnet
         run: dotnet build "project-agione-backend/Platform" --configuration Release --no-restore
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish "project-agione-backend" -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -60,5 +68,5 @@ jobs:
         with:
           app-name: 'agionedev'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3BE715B7870E4538B590634A53DF0A56 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_10CC802B4DDF494EB16EF8F857C6E6BF }}
           package: .
