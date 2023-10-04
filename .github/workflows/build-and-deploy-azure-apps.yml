@@ -6,7 +6,7 @@ on: workflow_dispatch
 jobs:
   app-hangfire-dev:
     
-    uses: ./.github/workflows/reusable_deploy_azurewebapp.yml
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
     
     with:
         TARGET_ENV: 'Development'
