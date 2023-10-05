@@ -96,7 +96,7 @@ jobs:
           with:
             app-name: ${{ inputs.AZURE_APPNAME }}
             #TODO: Revisit later to try to clean up this if-else. Seems like right now it's not possible to passs the repository environment secrets directly from the caller.
-            publish-profile: ${{ inputs.AZURE_APPNAME == 'app-hangfire-dev' && secrets.HANGFIRE_DEV_PUBLISHPROFILE || 'error' }}
+            publish-profile: ${{ inputs.AZURE_APPNAME == 'app-hangfire-dev' && secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0F1AB078F3DA49F281E84EB4E90CE53B }}
             slot-name: ${{ inputs.AZURE_SLOTNAME }}
             package: ${{ inputs.WORKING_DIRECTORY }}/publish
 
