@@ -10,7 +10,7 @@ jobs:
     
     with:
         TARGET_ENV: 'Development'
-        AZURE_APPNAME: 'app-hangfire-dev'
+        AZURE_APPNAME: 'agione-dev-hangfire'
         WORKING_DIRECTORY: 'project-agione-hangfire/agione-hangfire'
         DOTNET_VERSION: '6.0.x'
         CONFIGURATION: 'Release'
