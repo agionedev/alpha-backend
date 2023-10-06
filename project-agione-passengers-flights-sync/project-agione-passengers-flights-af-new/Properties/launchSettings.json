@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "project_agione_passengers_flights_sync": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7260",
+      "launchBrowser": false
+    }
+  }
+}

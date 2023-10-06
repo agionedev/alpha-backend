@@ -34,13 +34,21 @@ jobs:
         - run: echo "🎉 Build and Deploy target ${{ inputs.AZURE_APPNAME }} | ${{ inputs.AZURE_SLOTNAME }} | ${{ inputs.WORKING_DIRECTORY }}"
   
         - name: 'Checkout branch'
-          uses: actions/checkout@v3
-
+          uses: actions/checkout@v2
+          with:
+            submodules: 'recursive'
+            token: ${{secrets.GLOBAL_ACCESS_TOKEN}}
+        - name: Initialize and Update submodules
+          run: |
+            git submodule update --init --recursive
+          shell: bash
+          
         - name: Setup .NET ${{ inputs.DOTNET_VERSION }} environment
-          uses: actions/setup-dotnet@v3
+          uses: actions/setup-dotnet@v1
           with:
             dotnet-version: ${{ inputs.DOTNET_VERSION }}
-
+            include-prerelease: true
+            
         - name: Set up dependency caching
           uses: actions/cache@v3
           with:
@@ -51,7 +59,12 @@ jobs:
 
         - name: Restore dependencies
           run: dotnet restore "${{ inputs.WORKING_DIRECTORY }}"
-
+          
+        - name: See obj directory
+          run: |
+              cd project-agione-backend/IReportRender
+              ls -la 
+            
         - name: Build
           run: dotnet build "${{ inputs.WORKING_DIRECTORY }}" --configuration ${{ inputs.CONFIGURATION }} --no-restore
     
@@ -83,7 +96,12 @@ jobs:
           with:
             app-name: ${{ inputs.AZURE_APPNAME }}
             #TODO: Revisit later to try to clean up this if-else. Seems like right now it's not possible to passs the repository environment secrets directly from the caller.
-            publish-profile: ${{ inputs.AZURE_APPNAME == 'app-hangfire-dev' && secrets.HANGFIRE_DEV_PUBLISHPROFILE || 'error' }}
+            publish-profile: ${{ inputs.AZURE_APPNAME == 'agione-dev-hangfire' && secrets.HANGFIRE_DEV_PUBLISHPROFILE }}
             slot-name: ${{ inputs.AZURE_SLOTNAME }}
             package: ${{ inputs.WORKING_DIRECTORY }}/publish
 
+        - name: Delete Artifact
+          uses: GeekyEggo/delete-artifact@v2.0.0
+          with:
+            name: ${{ inputs.AZURE_APPNAME }}
+            path: ${{ inputs.WORKING_DIRECTORY }}/publish
