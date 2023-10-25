@@ -26,3 +26,6 @@
 	path = project-agione-workday-poster-transactions
 	url = https://github.com/agionedev/project-agione-workday-poster-transactions.git
 	branch = develop
+[submodule "project-agione-passengers-flights-sync"]
+	path = project-agione-passengers-flights-sync
+	url = https://github.com/agionedev/project-agione-passengers-flights-sync.git
