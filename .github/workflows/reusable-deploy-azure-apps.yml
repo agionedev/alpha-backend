@@ -24,8 +24,6 @@ on:
         default: 'production'
         type: string
 
-
-
 jobs:
     azfunctionbuild:
         name: 'Build ${{ inputs.AZURE_APPNAME }} - ${{ inputs.TARGET_ENV }}'
@@ -41,6 +39,12 @@ jobs:
         - name: Initialize and Update submodules
           run: |
             git submodule update --init --recursive
+            git submodule foreach --recursive git fetch
+            git submodule foreach --recursive git checkout ${{
+              inputs.TARGET_ENV == 'Development' && 'develop' ||
+              inputs.TARGET_ENV == 'Staging' && 'staging' ||
+              inputs.TARGET_ENV == 'Production' && 'master' 
+              }}
           shell: bash
           
         - name: Setup .NET ${{ inputs.DOTNET_VERSION }} environment
@@ -59,11 +63,6 @@ jobs:
 
         - name: Restore dependencies
           run: dotnet restore "${{ inputs.WORKING_DIRECTORY }}"
-          
-        - name: See obj directory
-          run: |
-              cd project-agione-backend/IReportRender
-              ls -la 
             
         - name: Build
           run: dotnet build "${{ inputs.WORKING_DIRECTORY }}" --configuration ${{ inputs.CONFIGURATION }} --no-restore
@@ -96,7 +95,11 @@ jobs:
           with:
             app-name: ${{ inputs.AZURE_APPNAME }}
             #TODO: Revisit later to try to clean up this if-else. Seems like right now it's not possible to passs the repository environment secrets directly from the caller.
-            publish-profile: ${{ inputs.AZURE_APPNAME == 'agione-dev-hangfire' && secrets.HANGFIRE_DEV_PUBLISHPROFILE }}
+            publish-profile: ${{ 
+                  inputs.AZURE_APPNAME == 'agionedev' && secrets.AGIONE_DEV_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'agione-dev-hangfire' && secrets.HANGFIRE_DEV_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'project-agione-laravel-sync' && secrets.LARAVELSYNC_DEV_PUBLISHPROFILE
+              }}
             slot-name: ${{ inputs.AZURE_SLOTNAME }}
             package: ${{ inputs.WORKING_DIRECTORY }}/publish
 
