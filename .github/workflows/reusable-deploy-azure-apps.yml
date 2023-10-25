@@ -41,8 +41,8 @@ jobs:
             git submodule update --init --recursive
             git submodule foreach --recursive git fetch
             git submodule foreach --recursive git checkout ${{
-            inputs.TARGET_ENV == 'Development' && develop || 
-            inputs.TARGET_ENV == 'Production' && master
+              inputs.TARGET_ENV == 'Development' && develop || 
+              inputs.TARGET_ENV == 'Production' && master
               }}
 
           shell: bash
