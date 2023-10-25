@@ -40,8 +40,10 @@ jobs:
           run: |
             git submodule update --init --recursive
             git submodule foreach --recursive git fetch
-            git submodule foreach --recursive git checkout 
-            ${{ if(inputs.TARGET_ENV == 'Development') }} develop ${{ elseif(inputs.TARGET_ENV == 'Production') }} master ${{ endif }}
+            git submodule foreach --recursive git checkout ${{
+            inputs.TARGET_ENV == 'Development' && develop || 
+            inputs.TARGET_ENV == 'Production' && master
+              }}
 
           shell: bash
           
