@@ -89,7 +89,7 @@ jobs:
             publish-profile: ${{ 
                   inputs.AZURE_APPNAME == 'agionedev' && secrets.AGIONE_DEV_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'agione-dev-hangfire' && secrets.HANGFIRE_DEV_PUBLISHPROFILE ||
-                  inputs.AZURE_APPNAME == 'project-agione-laravel-sync' && secrets.LARAVELSYNC_DEV_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'agionedev-laravel-sync' && secrets.LARAVELSYNC_DEV_PUBLISHPROFILE ||
                   'error'
               }}
             slot-name: ${{ inputs.AZURE_SLOTNAME }}
