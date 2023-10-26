@@ -40,11 +40,12 @@ jobs:
           run: |
             git submodule update --init --recursive
             git submodule foreach --recursive git fetch
-            if: "inputs.TARGET_ENV == 'Development'"
-            run: git submodule foreach --recursive git checkout develop
-            if: "inputs.TARGET_ENV == 'Production'"
-            run: git submodule foreach --recursive git checkout master
-          
+            if inputs.TARGET_ENV == 'Development'; then
+              git submodule foreach --recursive git checkout develop
+            else
+              git submodule foreach --recursive git checkout master
+            fi
+            
         - name: Setup .NET ${{ inputs.DOTNET_VERSION }} environment
           uses: actions/setup-dotnet@v1
           with:
