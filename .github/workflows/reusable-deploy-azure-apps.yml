@@ -38,6 +38,7 @@ jobs:
             token: ${{secrets.GLOBAL_ACCESS_TOKEN}}
         - name: Initialize and Update submodules
           run: |
+            git submodule foreach git fetch
             git submodule foreach git checkout ${{ inputs.TARGET_ENV == 'Development' && 'develop' || inputs.TARGET_ENV == 'Production' && 'master'}}
           
             
