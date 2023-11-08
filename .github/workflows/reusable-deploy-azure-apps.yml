@@ -35,6 +35,7 @@ jobs:
             fetch-depth: '0'
         - name: Set up Git credentials
           run: |
+            echo ${{github.ref}}
             git config --global credential.helper store
             git config --global user.password ${{ secrets.GLOBAL_ACCESS_TOKEN }}
             git config --global url.https://${{ secrets.GLOBAL_ACCESS_TOKEN }}@github.com/.insteadOf https://github.com/
@@ -47,6 +48,7 @@ jobs:
             github.ref == 'refs/heads/master' && 'master' ||
             github.ref == 'refs/heads/staging' && 'staging' ||
             github.ref == 'refs/heads/develop' && 'develop' }}
+            
             
         - name: Setup .NET ${{ inputs.DOTNET_VERSION }} environment
           uses: actions/setup-dotnet@v1
