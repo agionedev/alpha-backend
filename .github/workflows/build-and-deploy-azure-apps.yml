@@ -7,7 +7,6 @@ jobs:
   agionedev:
     uses: ./.github/workflows/reusable-deploy-azure-apps.yml
     with:
-        TARGET_ENV: 'Development'
         AZURE_APPNAME: 'agionedev'
         WORKING_DIRECTORY: 'project-agione-backend/Platform'
         DOTNET_VERSION: '6.0.x'
@@ -17,7 +16,6 @@ jobs:
   agione-dev-hangfire:
     uses: ./.github/workflows/reusable-deploy-azure-apps.yml
     with:
-        TARGET_ENV: 'Development'
         AZURE_APPNAME: 'agione-dev-hangfire'
         WORKING_DIRECTORY: 'project-agione-hangfire/agione-hangfire'
         DOTNET_VERSION: '6.0.x'
@@ -27,7 +25,6 @@ jobs:
   agionedev-laravel-sync:
     uses: ./.github/workflows/reusable-deploy-azure-apps.yml
     with:
-        TARGET_ENV: 'Development'
         AZURE_APPNAME: 'agionedev-laravel-sync'
         WORKING_DIRECTORY: 'project-agione-laravel-sync/project-agione-laravel-sync'
         DOTNET_VERSION: '6.0.x'
