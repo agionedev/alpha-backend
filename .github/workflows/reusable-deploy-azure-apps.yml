@@ -37,7 +37,7 @@ jobs:
           run: |
             git config --global credential.helper store
             git config --global user.password ${{ secrets.GLOBAL_ACCESS_TOKEN }}
-            git config --global url.https://%24%7B%7B/ secrets.GLOBAL_ACCESS_TOKEN }}@github.com/.insteadOf https://github.com/
+            git config --global url.https://${{ secrets.GLOBAL_ACCESS_TOKEN }}@github.com/.insteadOf https://github.com/
           shell: bash
         - name: 'Initialize and Update submodules'
           run: |
