@@ -42,8 +42,7 @@ jobs:
             git submodule foreach --recursive git checkout ${{ 
             github.ref == 'refs/heads/master' && 'master' ||
             github.ref == 'refs/heads/staging' && 'staging' ||
-            github.ref == 'refs/heads/develop' && 'develop'
-            }}
+            github.ref == 'refs/heads/develop' && 'develop' }}
             git submodule foreach --recursive git fetch
             git submodule foreach --recursive git pull
             
@@ -81,7 +80,9 @@ jobs:
         runs-on: ubuntu-latest
         needs: azfunctionbuild
         environment:
-            name: ${{ inputs.TARGET_ENV }}
+            name: ${{ 
+              github.ref == 'refs/heads/master' && 'Production' || 
+              github.ref == 'refs/heads/development' && 'Development' }}
         steps:
           
         - name: Download artifact
@@ -96,9 +97,9 @@ jobs:
             app-name: ${{ inputs.AZURE_APPNAME }}
             #TODO: Revisit later to try to clean up this if-else. Seems like right now it's not possible to passs the repository environment secrets directly from the caller.
             publish-profile: ${{ 
-                  inputs.AZURE_APPNAME == 'agionedev' && secrets.AGIONE_DEV_PUBLISHPROFILE ||
-                  inputs.AZURE_APPNAME == 'agione-dev-hangfire' && secrets.HANGFIRE_DEV_PUBLISHPROFILE ||
-                  inputs.AZURE_APPNAME == 'agionedev-laravel-sync' && secrets.LARAVELSYNC_DEV_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'agionedev' && secrets.AGIONE_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'agione-dev-hangfire' && secrets.HANGFIRE_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'agionedev-laravel-sync' && secrets.LARAVELSYNC_PUBLISHPROFILE ||
                   'error'
               }}
             slot-name: ${{ inputs.AZURE_SLOTNAME }}
