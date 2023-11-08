@@ -23,7 +23,7 @@ on:
 
 jobs:
     azfunctionbuild:
-        name: 'Build ${{ inputs.AZURE_APPNAME }} - ${{ github.ref == "refs/heads/master" && "Production" || github.ref == "refs/heads/development" && "Development"  }}'
+        name: "Build ${{ inputs.AZURE_APPNAME }} - ${{ github.ref == 'refs/heads/master' && 'Production' || github.ref == 'refs/heads/development' && 'Development'  }}"
         runs-on: ubuntu-latest
         steps:
         - run: echo "🎉 Build and Deploy target ${{ inputs.AZURE_APPNAME }} | ${{ inputs.AZURE_SLOTNAME }} | ${{ inputs.WORKING_DIRECTORY }}"
@@ -73,7 +73,7 @@ jobs:
             path: ${{ inputs.WORKING_DIRECTORY }}/publish
 
     deploy:
-        name: 'Deploy ${{ inputs.AZURE_APPNAME }} - ${{ github.ref == "refs/heads/master" && "Production" || github.ref == "refs/heads/development" && "Development"  }}'
+        name: "Deploy ${{ inputs.AZURE_APPNAME }} - ${{ github.ref == 'refs/heads/master' && 'Production' || github.ref == 'refs/heads/development' && 'Development'  }}"
         runs-on: ubuntu-latest
         needs: azfunctionbuild
         environment:
