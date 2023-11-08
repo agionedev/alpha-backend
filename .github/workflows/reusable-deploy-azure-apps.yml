@@ -36,12 +36,12 @@ jobs:
             
         - name: 'Initialize and Update submodules'
           run: |
+            git submodule update --init --remote
+            git submodule foreach --recursive git fetch
             git submodule foreach --recursive git checkout ${{ 
             github.ref == 'refs/heads/master' && 'master' ||
             github.ref == 'refs/heads/staging' && 'staging' ||
             github.ref == 'refs/heads/develop' && 'develop' }}
-            git submodule foreach --recursive git fetch
-            git submodule foreach --recursive git pull
             
         - name: Setup .NET ${{ inputs.DOTNET_VERSION }} environment
           uses: actions/setup-dotnet@v1
