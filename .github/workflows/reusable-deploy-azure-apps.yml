@@ -107,6 +107,8 @@ jobs:
                   inputs.AZURE_APPNAME == 'agionedev-flighttracking-metrics' && secrets.FLIGHTAWARE_METRICS_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'agionedev-workday-posting-transactions' && secrets.POSTER_TO_WORKDAY_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'agionedev-workdaysync' && secrets.WORKDAY_SYNC_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'app-agionefirehose-prod-use2-04' && secrets.FIREHOSE_SERVER_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'func-agionepassfasync-prod-use2-04' && secrets.PASSENGER_SYNC_PUBLISHPROFILE ||
                   'error'
               }}
             slot-name: ${{ inputs.AZURE_SLOTNAME }}
