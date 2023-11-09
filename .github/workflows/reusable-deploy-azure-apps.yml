@@ -42,6 +42,10 @@ jobs:
           shell: bash
         - name: 'Initialize and Update submodules'
           run: |
+            git checkout ${{ 
+            github.ref == 'refs/heads/master' && 'master' ||
+            github.ref == 'refs/heads/staging' && 'staging' ||
+            github.ref == 'refs/heads/develop' && 'develop' }}
             git submodule update --init --remote
             git submodule foreach --recursive git fetch
             git submodule foreach --recursive git checkout ${{ 
