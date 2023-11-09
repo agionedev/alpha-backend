@@ -110,12 +110,13 @@ jobs:
                   inputs.AZURE_APPNAME == 'app-hangfire-prod-use2-01' && secrets.HANGFIRE_PUBLISHPROFILE ||
                   
                   inputs.AZURE_APPNAME == 'agionedev-laravel-sync' && secrets.LARAVELSYNC_PUBLISHPROFILE ||
+
                   inputs.AZURE_APPNAME == 'func-agionelaravelsync-prod-use2-05' && secrets.LARAVELSYNC_PUBLISHPROFILE ||
                   
-                  inputs.AZURE_APPNAME == 'project-agione-flightaware-metrics' && secrets.FLIGHTAWARE_METRICS_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'agionedev-flighttracking-metrics' && secrets.FLIGHTAWARE_METRICS_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'agionestag-flighttracking-metrics' && secrets.FLIGHTAWARE_METRICS_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'func-agioneflighttracking-prod-use2-01' && secrets.FLIGHTAWARE_METRICS_PUBLISHPROFILE ||
-                  
+
                   inputs.AZURE_APPNAME == 'agionedev-workday-posting-transactions' && secrets.POSTER_TO_WORKDAY_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'func-agionepostwd-stag-use2-02' && secrets.POSTER_TO_WORKDAY_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'func-agionepostwd-prod-use2-01' && secrets.POSTER_TO_WORKDAY_PUBLISHPROFILE ||
@@ -127,6 +128,7 @@ jobs:
 
                   inputs.AZURE_APPNAME == 'func-agionepassfasync-prod-use2-04' && secrets.PASSENGER_SYNC_PUBLISHPROFILE ||
                   
+
                   'error'
               }}
             slot-name: ${{ inputs.AZURE_SLOTNAME }}
