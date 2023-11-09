@@ -1,5 +1,5 @@
 
-name: Build and Deploy Azure Apps Develop
+name: Build and Deploy Azure Apps Production
 
 on: workflow_dispatch
 
