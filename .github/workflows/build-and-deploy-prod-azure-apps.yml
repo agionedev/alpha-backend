@@ -1,0 +1,80 @@
+
+name: Build and Deploy Azure Apps Develop
+
+on: workflow_dispatch
+
+jobs:
+  agione:
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'app-agione-prod-use2-01'
+        WORKING_DIRECTORY: 'project-agione-backend/Platform'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+
+  hangfire:
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'app-hangfire-prod-use2-01'
+        WORKING_DIRECTORY: 'project-agione-hangfire/agione-hangfire'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+
+  laravel-sync:
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'func-agionelaravelsync-prod-use2-05'
+        WORKING_DIRECTORY: 'project-agione-laravel-sync/project-agione-laravel-sync'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+
+  flighttracking-metrics:
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'func-agioneflighttracking-prod-use2-01'
+        WORKING_DIRECTORY: 'project-agione-flightaware-metrics/FlyAwareMetrics'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+
+  workday-posting-transactions:
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'agionedev-workday-posting-transactions'
+        WORKING_DIRECTORY: 'project-agione-workday-poster-transactions/Agione-WorkdayFunctions'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+    
+  agionedev-workdaysync:
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'func-agionepostwd-prod-use2-01'
+        WORKING_DIRECTORY: 'project-agione-workday-poster-transactions/Agione-WorkdayFunctions'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+  
+  app-agionefirehose-prod-use2-04:
+    if: github.ref == 'refs/heads/master'
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'app-agionefirehose-prod-use2-04'
+        WORKING_DIRECTORY: 'project-agione-firehose-websocket-server/project-agione-firehose-server'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+  
+  func-agionepassfasync-prod-use2-04:
+    if: github.ref == 'refs/heads/master'
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'func-agionepassfasync-prod-use2-04'
+        WORKING_DIRECTORY: 'project-agione-firehose-websocket-server/project-agione-firehose-server'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+    
