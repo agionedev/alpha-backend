@@ -122,6 +122,10 @@ jobs:
                   
                   inputs.AZURE_APPNAME == 'agionedev-workdaysync' && secrets.WORKDAY_SYNC_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'func-agionewdsync-prod-use2-01' && secrets.WORKDAY_SYNC_PUBLISHPROFILE ||
+
+                  inputs.AZURE_APPNAME == 'app-agionefirehose-prod-use2-04' && secrets.FIREHOSE_SERVER_PUBLISHPROFILE ||
+
+                  inputs.AZURE_APPNAME == 'func-agionepassfasync-prod-use2-04' && secrets.PASSENGER_SYNC_PUBLISHPROFILE ||
                   
                   'error'
               }}
