@@ -104,6 +104,9 @@ jobs:
                   inputs.AZURE_APPNAME == 'agionedev' && secrets.AGIONE_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'agione-dev-hangfire' && secrets.HANGFIRE_PUBLISHPROFILE ||
                   inputs.AZURE_APPNAME == 'agionedev-laravel-sync' && secrets.LARAVELSYNC_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'project-agione-flightaware-metrics' && secrets.FLIGHTAWARE_METRICS_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'agionedev-workday-posting-transactions' && secrets.POSTER_TO_WORKDAY_PUBLISHPROFILE ||
+                  inputs.AZURE_APPNAME == 'agionedev-workdaysync' && secrets.WORKDAY_SYNC_PUBLISHPROFILE ||
                   'error'
               }}
             slot-name: ${{ inputs.AZURE_SLOTNAME }}
