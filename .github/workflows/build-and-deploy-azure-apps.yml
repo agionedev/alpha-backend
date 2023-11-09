@@ -31,3 +31,30 @@ jobs:
         CONFIGURATION: 'Release'
     secrets: inherit
 
+  agionedev-flighttracking-metrics:
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'agionedev-flighttracking-metrics'
+        WORKING_DIRECTORY: 'project-agione-flightaware-metrics/FlyAwareMetrics'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+
+  agionedev-workday-posting-transactions:
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'agionedev-workday-posting-transactions'
+        WORKING_DIRECTORY: 'project-agione-workday-poster-transactions/Agione-WorkdayFunctions'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+    
+  agionedev-workdaysync:
+    uses: ./.github/workflows/reusable-deploy-azure-apps.yml
+    with:
+        AZURE_APPNAME: 'agionedev-workdaysync'
+        WORKING_DIRECTORY: 'project-agione-workday-poster-transactions/Agione-WorkdayFunctions'
+        DOTNET_VERSION: '6.0.x'
+        CONFIGURATION: 'Release'
+    secrets: inherit
+
